@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Gutierrez_adan_parcial1.github.io/static/css/main.f855e6bc.css",
+    "main.js": "/Gutierrez_adan_parcial1.github.io/static/js/main.b1b8f158.js",
+    "static/js/453.c89a881a.chunk.js": "/Gutierrez_adan_parcial1.github.io/static/js/453.c89a881a.chunk.js",
+    "static/media/profile.jpeg": "/Gutierrez_adan_parcial1.github.io/static/media/profile.0d29b23e053bc9b266d9.jpeg",
+    "index.html": "/Gutierrez_adan_parcial1.github.io/index.html",
+    "main.f855e6bc.css.map": "/Gutierrez_adan_parcial1.github.io/static/css/main.f855e6bc.css.map",
+    "main.b1b8f158.js.map": "/Gutierrez_adan_parcial1.github.io/static/js/main.b1b8f158.js.map",
+    "453.c89a881a.chunk.js.map": "/Gutierrez_adan_parcial1.github.io/static/js/453.c89a881a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.b1b8f158.js"
+  ]
+}
