@@ -1,11 +1,73 @@
+import React, { useState } from 'react';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import profile from './profile.jpeg';
 import { HashRouter , Routes, Route, Link } from "react-router-dom";
 import './App.css';
 import Parcial from './componente';
 import Parcial2 from './Parcial2'; // Importamos el nuevo archivo
 
+// Este es el componente al que redirigiremos
+
+const handleRedirect = () => {
+  // Aquí podrías agregar lógica adicional
+  window.open("https://merlipex9090.atlassian.net/jira/software/projects/SCRUM/boards/1", "_blank", "noopener,noreferrer");
+};
+const Dashboard = ({ user }) => (
+  <div className="App-header">
+    <img src={profile} width="15%" style={{ borderRadius: '50%' }} />
+    <h1>Bienvenido(a), {user.name}</h1>
+    <h2>EVALUACIÓN PARCIAL 3</h2>
+    <div style={{ padding: '20px' }}>
+    
+      
+      {/* Opción con etiqueta de anclaje simple */}
+      <a 
+        href={`${process.env.PUBLIC_URL}/pdf/ERS.pdf`} 
+        download
+      >
+        <button>DESCARGAR DOCUMENTO ERS DEL PROYECTO</button>
+      </a>
+      
+    </div>
+    <button onClick={handleRedirect}>
+    TABLERO JIRA PROYECTO Coricorn
+    </button><br></br>
+    <button onClick={() => window.location.reload()}>CERRRAR SESIÓN PARCIAL 3</button>
+  </div>
+);
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  // Sustituye con tu Client ID real de Google Cloud Console
+  const clientId = "458096555010-9hrotk8no64ksj857ffvf8p26vh0j9ep.apps.googleusercontent.com";
+
+  const onSuccess = (response) => {
+    console.log("Login Success:", response);
+    // Aquí normalmente decodificarías el JWT (token) para obtener los datos del usuario
+  
+    const token = response.credential; // depende del provider
+    const decoded = jwtDecode(token);
+    console.log("Usuario decodificado:", decoded);
+
+    setUserData({
+      name: decoded.name || decoded.given_name,
+      email: decoded.email,
+      picture: decoded.picture,
+    });
+    setIsLoggedIn(true);
+  };
+
+  const onError = () => {
+    console.log("Login Failed");
+  };
   return (
+    <GoogleOAuthProvider clientId={clientId}>
+      {isLoggedIn ? (
+          <Dashboard user={userData} />
+        ) : (
     <HashRouter >
       <Routes>
           {/* Página principal */}
@@ -41,6 +103,13 @@ function App() {
                   <Link className="App-link" to="/parcial2">
                     DOCUMENTACION PARCIAL 2
                   </Link>
+                  <div style={{ margin: '20px' }}>
+              <GoogleLogin 
+                onSuccess={onSuccess} 
+                onError={onError}
+                useOneTap
+              />
+            </div>
                 </header>
               </div>
             }
@@ -53,6 +122,8 @@ function App() {
         <Route path="/parcial2" element={<Parcial2 />} />
       </Routes>
     </HashRouter >
+            )}
+    </GoogleOAuthProvider>
   );
 }
 
